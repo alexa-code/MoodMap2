@@ -5,7 +5,7 @@ var express = require('express')
  , server = http.createServer(app)
  , util = require('util')
  , io = require('socket.io').listen(server)
- , analyze = require('sentimental').analyze;
+ , analyze = require('Sentimental').analyze;
 
 server.listen(process.env.PORT || 8080);
 

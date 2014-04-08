@@ -7,7 +7,6 @@
     "express": "3.x",
     "twitter": "*",
     "http": "*",
-    "socket.io": "*",
     "util": "*",
     "socket.io": "*",
     "Sentimental": "*"
