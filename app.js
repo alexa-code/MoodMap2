@@ -36,7 +36,7 @@ io.sockets.on('connection', function (socket) {
 						if ((data.text).match(/:\/|stupid|ughh/g)) {
 							polarity = -4;
 						}
-						if ((data.text).match(/sad|hate|sick|tired|no good|stfu|irritat|annoy|hurt|giving up|i hate|:\(/g)) {
+						if ((data.text).match(/sad|hate|sick|tired|no good|stfu|irritat|annoy|leave me alone|hurt|giving up|i hate|:\(/g)) {
 							polarity = -5;
 						} 
 						if ((data.text).match(/:\)|love|yay|:D|\(:/g)) {
