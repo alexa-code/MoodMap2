@@ -7,7 +7,7 @@ var express = require('express')
  , io = require('socket.io').listen(server)
  , analyze = require('sentimental').analyze;
 
-server.listen(process.env.port || 8080);
+server.listen(process.env.PORT || 8080);
 
 app.use(express.static(__dirname + '/public'));
 
