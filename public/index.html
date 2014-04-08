@@ -96,7 +96,7 @@ body {
   bottom: 0;
   left: 35%;
   margin: 0 5% 1% 0;
-  display:none;
+  visibility:hidden;
 }
 
 #made-by a {
@@ -109,8 +109,8 @@ body {
 #instructions {
   font: 17px Aleo;
   text-align: center;
-  margin-bottom: -63px;
-  display: none;
+  margin-bottom: -65px;
+  visibility:hidden;
 }
 
 .color-guide{
@@ -123,7 +123,7 @@ body {
 }
 .color {
   padding:5px 10px 5px 10px;
-  display: none;
+  visibility:hidden;
 }
 #red1 {
   background-color:#FF5C5C;
@@ -176,13 +176,13 @@ document.getElementById('homeclick').setAttribute("onclick", "hideHomeScreen()")
 
 function hideHomeScreen() {
   $('#home-screen').hide();
-  $("#made-by, #instructions, .color").show();
+  $("#made-by, .color, #instructions").css("visibility", "visible");
 }
 
 // If user presses 'shift' key, show home screen and only map behind it
 $(document).keyup(function(e) {
   if (e.keyCode == 16) {
-    $('#made-by, #instructions, .color').hide();
+    $("#made-by, .color, #instructions").css("visibility", "hidden");
     $('#home-screen').show();
   }
 });
@@ -382,7 +382,7 @@ function zoomIn(d) {
   // If zoomed in on a state, hide cities and show tweets
   svg.selectAll("circle")
       .attr("visibility", cityVis);
-  $("#made-by, #instructions, .color").hide();
+  $("#made-by, .color, #instructions").css("visibility", "hidden");
   $("body").append("<div class='text-box'><div style='color:white;font-size:26px;font-weight:lighter;'><strong>Tweets from " + state + ":</strong></div><br/><br/>");
   for (var i = 0; i < data.length; i++) {
     if (data[i].state == state) {
@@ -406,7 +406,7 @@ function zoomOut() {
   setTimeout(function() {
     svg.selectAll("circle")
         .attr("visibility", cityVis);
-    $("#made-by, #instructions, .color").show();    
+    $("#made-by, .color, #instructions").css("visibility", "visible");
     addPoints(pointsToAdd);
     pointsToAdd = [];
   }, 765);   
