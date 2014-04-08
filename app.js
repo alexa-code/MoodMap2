@@ -28,13 +28,13 @@ io.sockets.on('connection', function (socket) {
 					var polarity = analyze(data.text).score;
 					// Adding to the sentimental analysis
 					if (data.coordinates && polarity !== 0 && !((data.text).match(/@|http/g))) {
-						if ((data.text).match(/sad|hate|sick|tired|no good|:\(/g)) {
+						if ((data.text).match(/sad|hate|sick|tired|no good|stfu|irritat|annoy|hurt|giving up|i hate|:\(/g)) {
 							polarity = -5;
 						} 
 						if ((data.text).match(/:\//g)) {
 							polarity = -4;
 						}
-						if ((data.text).match(/:\)|stfu|irritat|annoy|hurt|giving up|i hate/g)) {
+						if ((data.text).match(/:\)|love|yay|:D/g)) {
 							polarity = 5;
 						}
 						var tweet = { "text" : data.text, "location" : data.coordinates.coordinates,
