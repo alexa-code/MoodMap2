@@ -1,0 +1,18 @@
+{
+  "name": "moodmap",
+  "description": "sentiment analysis of tweets on a US map",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "3.x",
+    "twitter": "*",
+    "http": "*",
+    "socket.io": "*",
+    "util": "*",
+    "socket.io": "*",
+    "sentimental": "*",
+  },
+  "engines": {
+    "node": "0.10.x"
+  }
+}
