@@ -421,6 +421,12 @@ function clicked(d) {
   }
 }
 
+// For Heroku socket error
+io.configure(function () { 
+  io.set("transports", ["xhr-polling"]); 
+  io.set("polling duration", 10); 
+});
+
 // yay sockets
 if (io) {
   var socket = io.connect('/');
