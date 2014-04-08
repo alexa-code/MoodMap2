@@ -10,7 +10,7 @@
     "socket.io": "*",
     "util": "*",
     "socket.io": "*",
-    "sentimental": "*"
+    "Sentimental": "*"
   },
   "engines": {
     "node": "0.10.x"
