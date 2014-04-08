@@ -277,6 +277,7 @@ function addPoints(points) {
       .attr("transform", function(d) {
         return "translate(" + projection([point.location[0],point.location[1]]) + ")";
       }).attr("fill", mapPolarity(point.polarity));
+    console.log(data.length)
   }
 }
 
