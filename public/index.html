@@ -94,8 +94,7 @@ body {
   font-family: Aleo;
   position: fixed;
   bottom: 0;
-  left: 35%;
-  margin: 0 5% 1% 0;
+  margin-bottom: 1%;
   visibility:hidden;
 }
 
@@ -172,6 +171,16 @@ body {
 </div> 
 <script>
 
+var width = $(document).width(),
+    height = $(document).height(),
+    cityVis = "visible",
+    data = [],
+    pointsToAdd = [],
+    centered;
+
+// Centers here, since can't center fixed position div in CSS
+$("#made-by").css('left', (width/2) - $("#made-by").width()/2 + 10);
+
 document.getElementById('homeclick').setAttribute("onclick", "hideHomeScreen()");
 
 function hideHomeScreen() {
@@ -186,13 +195,6 @@ $(document).keyup(function(e) {
     $('#home-screen').show();
   }
 });
-
-var width = $(document).width(),
-    height = $(document).height(),
-    cityVis = "visible",
-    data = [],
-    pointsToAdd = [],
-    centered;
 
 $(document).keyup(function(e) {
   if (e.keyCode == 27 && cityVis == "hidden") {
