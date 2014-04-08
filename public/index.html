@@ -40,33 +40,33 @@
   stroke-linecap: round;
   pointer-events: none;
 }
-  .overlay{
-    opacity:0.8;
-    background-color:black;
-    position:fixed;
-    width:100%;
-    height:100%;
-    top:0px;
-    left:0px;
-    z-index:1000;
+.overlay{
+  opacity:0.8;
+  background-color:black;
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0px;
+  left:0px;
+  z-index:1000;
 }
 
- .logo {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
+.logo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-  .text {
-    color: white;
-    font-family: Aleo;
-    font-size: 18px;
-    text-align: center;
-    width:65%;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: default;
-  }
+.text {
+  color: white;
+  font-family: Aleo;
+  font-size: 18px;
+  text-align: center;
+  width:65%;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: default;
+}
 
 body {
   position:fixed;
@@ -105,15 +105,63 @@ body {
   font-weight: bold;
   font-size: 14px;
 }
+
+#instructions {
+  font: 17px Aleo;
+  text-align: center;
+  margin-bottom: -60px;
+  display: none;
+}
+
+.color-guide{
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  font-family: Aleo;
+  text-align: center;
+  display: block;
+}
+.color {
+  padding:5px 10px 5px 10px;
+  display: none;
+}
+#red1 {
+  background-color:#FF5C5C;
+}
+#red2 {
+  background-color:#FF9673;
+}
+#red3 {
+  background-color:#FCD16A;
+}
+#neutral1 {
+  background-color:#FFDC52;
+}
+#neutral2 {
+  background-color:#CCF527;
+}
+#green1 {
+  background-color:#9CF527;
+}
+#green2 {
+  background-color:#74FA3E;
+}
 </style>
 <body>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
 <script src='http://code.jquery.com/jquery.min.js' type='text/javascript'></script>
 <script src='../socket.io/socket.io.js'></script>
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
-<form action="index.py"></form>
-<div id="made-by"><div style='margin-left:25px'>Press 'esc' to return to the home screen.</div>Made by: <a href="http://twitter.com/alexa_claire">Alexa</a> x <a href="http://twitter.com/SweetnessYo">Ian</a> x <a href="http://twitter.com/abolstery">Aboli</a> x <a href="http://twitter.com/defawesomeAnita">Anita</a> at <a href="http://bitca.mp">Bitcamp</a></div>
+
+<div id='instructions'>Click on a state to view mood-colored tweets from that state. <br/>Click on the state again or press your <strong>'esc'</strong> key to zoom back out.<br/>Press your <strong>'shift'</strong> key to return to the home screen.</div>
+<div class='color-guide'><div id='red1' class='color'>:(</div>
+<div id='red2' class='color'>&nbsp;</div>
+<div id='red3' class='color'>&nbsp;</div>
+<div id='neutral1' class='color'>&nbsp;</div>
+<div id='neutral2' class='color'>&nbsp;</div>
+<div id='green1' class='color'>&nbsp;</div>
+<div id='green2' class='color'>:)</div></div>
+<div id="made-by">Made by: <a href="http://twitter.com/alexa_claire">Alexa</a> x <a href="http://twitter.com/SweetnessYo">Ian</a> x <a href="http://twitter.com/abolstery">Aboli</a> x <a href="http://twitter.com/defawesomeAnita">Anita</a> at <a href="http://bitca.mp">Bitcamp</a></div>
 <div class="overlay" id="home-screen">
   <img src="/static/moodmap.png" class="logo">
   <p class="text">
@@ -128,13 +176,13 @@ document.getElementById('homeclick').setAttribute("onclick", "hideHomeScreen()")
 
 function hideHomeScreen() {
   $('#home-screen').hide();
-  $("#made-by").show();
+  $("#made-by, #instructions, .color").show();
 }
 
-// If user presses 'esc' key, show home screen and only map behind it
+// If user presses 'shift' key, show home screen and only map behind it
 $(document).keyup(function(e) {
-  if (e.keyCode == 27) {
-    $('#made-by').hide();
+  if (e.keyCode == 16) {
+    $('#made-by, #instructions, .color').hide();
     $('#home-screen').show();
   }
 });
@@ -145,6 +193,12 @@ var width = $(document).width(),
     data = [],
     pointsToAdd = [],
     centered;
+
+$(document).keyup(function(e) {
+  if (e.keyCode == 27 && cityVis == "hidden") {
+    zoomOut();
+  }
+});
 
 var projection = d3.geo.albersUsa()
     .scale(1070)
@@ -298,58 +352,71 @@ for (var key in states) {
   stateNames.push(states[key]);
 }
 
+function zoom(k,x,y,boxVis) {
+  g.transition()
+    .duration(750)
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+    .style("stroke-width", 1.5 / k + "px");
+
+  svg.select("#box")
+    .attr("visibility",boxVis);
+
+  $(".text-box").remove();
+}
+
+function zoomIn(d) {
+  var x, y, k, boxVis, state;
+  state = states[d.id];
+  var centroid = path.centroid(d);
+  x = centroid[0];
+  y = centroid[1];
+  k = 4;
+  centered = d;
+  cityVis = "hidden";
+  boxVis = "visible";
+  g.selectAll("path")
+    .classed("active", centered && function(d) { return d === centered; });
+
+  zoom(k,x,y,boxVis);
+
+  // If zoomed in on a state, hide cities and show tweets
+  svg.selectAll("circle")
+      .attr("visibility", cityVis);
+  $("#made-by, #instructions, .color").hide();
+  $("body").append("<div class='text-box'><div style='color:white;font-size:26px;font-weight:lighter;'><strong>Tweets from " + state + ":</strong></div><br/><br/>");
+  for (var i = 0; i < data.length; i++) {
+    if (data[i].state == state) {
+      $(".text-box").append("<div style='color:" + mapPolarity(data[i].polarity) + "'>" + data[i].text + "</div><br/>");
+    }
+  }
+  $(".text-box").append("</div>");
+}
+
+function zoomOut() {
+  var x, y, k, boxVis;
+  x = width / 2;
+  y = height / 2;
+  k = 1;
+  centered = null;
+  cityVis = "visible";
+  boxVis = "hidden";
+  g.selectAll("path")
+    .classed("active", null);
+  zoom(k,x,y,boxVis);
+  setTimeout(function() {
+    svg.selectAll("circle")
+        .attr("visibility", cityVis);
+    $("#made-by, #instructions, .color").show();    
+    addPoints(pointsToAdd);
+    pointsToAdd = [];
+  }, 765);   
+}
 function clicked(d) {
   var x, y, k, boxVis, state;
   if (d && centered !== d) {
-    state = states[d.id];
-    var centroid = path.centroid(d);
-    x = centroid[0];
-    y = centroid[1];
-    k = 4;
-    centered = d;
-    cityVis = "hidden";
-    boxVis = "visible";
+    zoomIn(d);
   } else {
-    x = width / 2;
-    y = height / 2;
-    k = 1;
-    centered = null;
-    cityVis = "visible";
-    boxVis = "hidden";
-  }
-
-  g.selectAll("path")
-      .classed("active", centered && function(d) { return d === centered; });
-
-  g.transition()
-      .duration(750)
-      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
-      .style("stroke-width", 1.5 / k + "px");
-
-  svg.select("#box")
-      .attr("visibility",boxVis);
-
-  $(".text-box").remove();
-  if (cityVis == "hidden") {
-    // If zoomed in on a state, hide cities and show tweets
-    svg.selectAll("circle")
-        .attr("visibility", cityVis);
-    $("#made-by").hide();
-    $("body").append("<div class='text-box'><div style='color:white;font-size:26px;font-weight:lighter;'><strong>Tweets from " + state + ":</strong></div><br/><br/>");
-    for (var i = 0; i < data.length; i++) {
-      if (data[i].state == state) {
-        $(".text-box").append("<div style='color:" + mapPolarity(data[i].polarity) + "'>" + data[i].text + "</div><br/>");
-      }
-    }
-    $(".text-box").append("</div>");
-  } else {
-      setTimeout(function() {
-        svg.selectAll("circle")
-            .attr("visibility", cityVis);
-        $("#made-by").show();    
-        addPoints(pointsToAdd);
-        pointsToAdd = [];
-      }, 765);    
+    zoomOut();
   }
 }
 
