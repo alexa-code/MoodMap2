@@ -33,7 +33,7 @@ io.sockets.on('connection', function (socket) {
 					var polarity = analyze(data.text).score;
 					// Adding to the sentimental analysis
 					if (data.coordinates && polarity !== 0 && !((data.text).match(/@|http/g))) {
-						if ((data.text).match(/:\/|stupid|ughh/g)) {
+						if ((data.text).match(/:\/|stupid|ughh|slut|spider/g)) {
 							polarity = -4;
 						}
 						if ((data.text).match(/sad|hate|sick|tired|no good|stfu|irritat|annoy|leave me alone|hurt|giving up|i hate|:\(/g)) {
