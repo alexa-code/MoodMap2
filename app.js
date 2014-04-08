@@ -34,7 +34,7 @@ io.sockets.on('connection', function (socket) {
 						if ((data.text).match(/:\//g)) {
 							polarity = -4;
 						}
-						if ((data.text).match(/:\)|love|yay|:D/g)) {
+						if ((data.text).match(/:\)|love|yay|:D|\(:/g)) {
 							polarity = 5;
 						}
 						var tweet = { "text" : data.text, "location" : data.coordinates.coordinates,
