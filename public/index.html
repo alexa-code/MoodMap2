@@ -175,7 +175,7 @@ var width = $(document).width(),
     height = $(document).height(),
     cityVis = "visible",
     data = [],
-    pointsToAdd = [],
+    currState,
     centered;
 
 // Centers here, since can't center fixed position div in CSS
@@ -279,7 +279,9 @@ function addPoints(points) {
       .attr("transform", function(d) {
         return "translate(" + projection([point.location[0],point.location[1]]) + ")";
       }).attr("fill", mapPolarity(point.polarity));
-    console.log(data.length)
+    if (cityVis == "hidden" && currState && currState == point.state) {
+      $('#text-box-body').prepend("<div style='color:" + mapPolarity(point.polarity) + "'>" + point.text + "<br/><br/>");
+    }
   }
 }
 
@@ -368,8 +370,8 @@ function zoom(k,x,y,boxVis) {
 }
 
 function zoomIn(d) {
-  var x, y, k, boxVis, state;
-  state = states[d.id];
+  var x, y, k, boxVis;
+  currState = states[d.id];
   var centroid = path.centroid(d);
   x = centroid[0];
   y = centroid[1];
@@ -386,13 +388,12 @@ function zoomIn(d) {
   svg.selectAll("circle")
       .attr("visibility", cityVis);
   $("#made-by, .color, #instructions").css("visibility", "hidden");
-  $("body").append("<div class='text-box'><div style='color:white;font-size:26px;font-weight:lighter;'><strong>Tweets from " + state + ":</strong></div><br/><br/>");
-  for (var i = 0; i < data.length; i++) {
-    if (data[i].state == state) {
-      $(".text-box").append("<div style='color:" + mapPolarity(data[i].polarity) + "'>" + data[i].text + "</div><br/>");
+  $("body").append("<div class='text-box'><div style='color:white;font-size:26px;font-weight:lighter;'><strong>Tweets from " + currState + ":</strong></div><br/><br/><div id='text-box-body'>");
+  for (var i = data.length - 1; i >= 0; i--) {
+    if (data[i].state == currState) {
+      $("#text-box-body").append("<div style='color:" + mapPolarity(data[i].polarity) + "'>" + data[i].text + "<br/><br/>");
     }
   }
-  $(".text-box").append("</div>");
 }
 
 function zoomOut() {
@@ -410,12 +411,9 @@ function zoomOut() {
     svg.selectAll("circle")
         .attr("visibility", cityVis);
     $("#made-by, .color, #instructions").css("visibility", "visible");
-    addPoints(pointsToAdd);
-    pointsToAdd = [];
   }, 765);   
 }
 function clicked(d) {
-  var x, y, k, boxVis, state;
   if (d && centered !== d) {
     zoomIn(d);
   } else {
@@ -434,13 +432,7 @@ if (io) {
       // Check that tweet is coming from one of the US states
       if ($.inArray(newTweet.state, stateNames) > -1) {
         data.push(newTweet);
-        if (cityVis == "visible") {
-          addPoints([newTweet]);
-        } else {
-          // If zoomed in, add points later once you zoom out, 
-          // so that the transition is smooth
-          pointsToAdd.push(newTweet);
-        }
+        addPoints([newTweet]);
       } 
     });
   });
