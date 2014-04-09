@@ -315,57 +315,57 @@ function mapPolarity(dataPolarity) {
 // lol d3 states have weird alphabetical-yet-skipping-some indexing 
 // .. so had to write this out
 var states = {
-  1: {name: "Alabama", pos: 0, neg: 0},
-  2: {name: "Alaska", pos: 0, neg: 0},
-  4: {name: "Arizona", pos: 0, neg: 0},
-  5: {name: "Arkansas", pos: 0, neg: 0},
-  6: {name: "California", pos: 0, neg: 0},
-  8: {name: "Colorado", pos: 0, neg: 0},
-  9: {name: "Connecticut", pos: 0, neg: 0},
-  10: {name: "Delaware", pos: 0, neg: 0},
-  11: {name: "District of Columbia", pos: 0, neg: 0},
-  12: {name: "Florida", pos: 0, neg: 0},
-  13: {name: "Georgia", pos: 0, neg: 0},
-  15: {name: "Hawaii", pos: 0, neg: 0},
-  16: {name: "Idaho", pos: 0, neg: 0},
-  17: {name: "Illinois", pos: 0, neg: 0},
-  18: {name: "Indiana", pos: 0, neg: 0},
-  19: {name: "Iowa", pos: 0, neg: 0},
-  20: {name: "Kansas", pos: 0, neg: 0},
-  21: {name: "Kentucky", pos: 0, neg: 0},
-  22: {name: "Louisiana", pos: 0, neg: 0},
-  23: {name: "Maine", pos: 0, neg: 0},
-  24: {name: "Maryland", pos: 0, neg: 0},
-  25: {name: "Massachusetts", pos: 0, neg: 0},
-  26: {name: "Michigan", pos: 0, neg: 0},
-  27: {name: "Minnesota", pos: 0, neg: 0},
-  28: {name: "Mississippi", pos: 0, neg: 0},
-  29: {name: "Missouri", pos: 0, neg: 0},
-  30: {name: "Montana", pos: 0, neg: 0},
-  31: {name: "Nebraska", pos: 0, neg: 0},
-  32: {name: "Nevada", pos: 0, neg: 0},
-  33: {name: "New Hampshire", pos: 0, neg: 0},
-  34: {name: "New Jersey", pos: 0, neg: 0},
-  35: {name: "New Mexico", pos: 0, neg: 0},
-  36: {name: "New York", pos: 0, neg: 0},
-  37: {name: "North Carolina", pos: 0, neg: 0},
-  38: {name: "North Dakota", pos: 0, neg: 0},
-  39: {name: "Ohio", pos: 0, neg: 0},
-  40: {name: "Oklahoma", pos: 0, neg: 0},
-  41: {name: "Oregon", pos: 0, neg: 0},
-  42: {name: "Pennsylvania", pos: 0, neg: 0},
-  44: {name: "Rhode Island", pos: 0, neg: 0},
-  45: {name: "South Carolina", pos: 0, neg: 0},
-  46: {name: "South Dakota", pos: 0, neg: 0},
-  47: {name: "Tennessee", pos: 0, neg: 0},
-  48: {name: "Texas", pos: 0, neg: 0},
-  49: {name: "Utah", pos: 0, neg: 0},
-  50: {name: "Vermont", pos: 0, neg: 0},
-  51: {name: "Virginia", pos: 0, neg: 0},
-  53: {name: "Washington", pos: 0, neg: 0},
-  54: {name: "West Virginia", pos: 0, neg: 0},
-  55: {name: "Wisconsin", pos: 0, neg: 0},
-  56: {name: "Wyoming", pos: 0, neg: 0}
+  1: {name: "Alabama", pos: 0, neg: 0, count: 0},
+  2: {name: "Alaska", pos: 0, neg: 0, count: 0},
+  4: {name: "Arizona", pos: 0, neg: 0, count: 0},
+  5: {name: "Arkansas", pos: 0, neg: 0, count: 0},
+  6: {name: "California", pos: 0, neg: 0, count: 0},
+  8: {name: "Colorado", pos: 0, neg: 0, count: 0},
+  9: {name: "Connecticut", pos: 0, neg: 0, count: 0},
+  10: {name: "Delaware", pos: 0, neg: 0, count: 0},
+  11: {name: "District of Columbia", pos: 0, neg: 0, count: 0},
+  12: {name: "Florida", pos: 0, neg: 0, count: 0},
+  13: {name: "Georgia", pos: 0, neg: 0, count: 0},
+  15: {name: "Hawaii", pos: 0, neg: 0, count: 0},
+  16: {name: "Idaho", pos: 0, neg: 0, count: 0},
+  17: {name: "Illinois", pos: 0, neg: 0, count: 0},
+  18: {name: "Indiana", pos: 0, neg: 0, count: 0},
+  19: {name: "Iowa", pos: 0, neg: 0, count: 0},
+  20: {name: "Kansas", pos: 0, neg: 0, count: 0},
+  21: {name: "Kentucky", pos: 0, neg: 0, count: 0},
+  22: {name: "Louisiana", pos: 0, neg: 0, count: 0},
+  23: {name: "Maine", pos: 0, neg: 0, count: 0},
+  24: {name: "Maryland", pos: 0, neg: 0, count: 0},
+  25: {name: "Massachusetts", pos: 0, neg: 0, count: 0},
+  26: {name: "Michigan", pos: 0, neg: 0, count: 0},
+  27: {name: "Minnesota", pos: 0, neg: 0, count: 0},
+  28: {name: "Mississippi", pos: 0, neg: 0, count: 0},
+  29: {name: "Missouri", pos: 0, neg: 0, count: 0},
+  30: {name: "Montana", pos: 0, neg: 0, count: 0},
+  31: {name: "Nebraska", pos: 0, neg: 0, count: 0},
+  32: {name: "Nevada", pos: 0, neg: 0, count: 0},
+  33: {name: "New Hampshire", pos: 0, neg: 0, count: 0},
+  34: {name: "New Jersey", pos: 0, neg: 0, count: 0},
+  35: {name: "New Mexico", pos: 0, neg: 0, count: 0},
+  36: {name: "New York", pos: 0, neg: 0, count: 0},
+  37: {name: "North Carolina", pos: 0, neg: 0, count: 0},
+  38: {name: "North Dakota", pos: 0, neg: 0, count: 0},
+  39: {name: "Ohio", pos: 0, neg: 0, count: 0},
+  40: {name: "Oklahoma", pos: 0, neg: 0, count: 0},
+  41: {name: "Oregon", pos: 0, neg: 0, count: 0},
+  42: {name: "Pennsylvania", pos: 0, neg: 0, count: 0},
+  44: {name: "Rhode Island", pos: 0, neg: 0, count: 0},
+  45: {name: "South Carolina", pos: 0, neg: 0, count: 0},
+  46: {name: "South Dakota", pos: 0, neg: 0, count: 0},
+  47: {name: "Tennessee", pos: 0, neg: 0, count: 0},
+  48: {name: "Texas", pos: 0, neg: 0, count: 0},
+  49: {name: "Utah", pos: 0, neg: 0, count: 0},
+  50: {name: "Vermont", pos: 0, neg: 0, count: 0},
+  51: {name: "Virginia", pos: 0, neg: 0, count: 0},
+  53: {name: "Washington", pos: 0, neg: 0, count: 0},
+  54: {name: "West Virginia", pos: 0, neg: 0, count: 0},
+  55: {name: "Wisconsin", pos: 0, neg: 0, count: 0},
+  56: {name: "Wyoming", pos: 0, neg: 0, count: 0}
 };
 
 var stateNames = [];
@@ -447,6 +447,7 @@ function getStateObj(state) {
 
 function polarityCounter(tweet) {
   var stateObj = getStateObj(tweet.state);
+  stateObj.count++;
   if (tweet.polarity > 1) {
     stateObj.pos++;
   } 
@@ -459,11 +460,11 @@ function mostPos() {
   var state = null;
   var most = 0;
   for (var key in states) {
-    var currPos = states[key].pos;
+    var currPos = states[key].pos / states[key].count;
     var currState = states[key].name;
-    if (currState.match(/California|Florida|Texas/g)) {
-      currPos /= 1.5;
-    }
+    // if (currState.match(/California|Florida|Texas/g)) {
+    //   currPos /= 1.5;
+    // }
     if (currPos > most) {
       most = currPos;
       state = currState;
@@ -476,11 +477,11 @@ function mostNeg() {
   var state = null;
   var most = 0;
   for (var key in states) {
-    var currNeg = states[key].neg;
+    var currNeg = states[key].neg / states[key].count;
     var currState = states[key].name;
-    if (currState.match(/California|Florida|Texas/g)) {
-      currNeg /= 1.5;
-    }
+    // if (currState.match(/California|Florida|Texas/g)) {
+    //   currNeg /= 1.5;
+    // }
     if (currNeg > most) {
       most = currNeg;
       state = currState;
