@@ -462,7 +462,7 @@ function mostPos() {
     var currPos = states[key].pos;
     var currState = states[key].name;
     if (currState.match(/California|Florida|Texas/g)) {
-      currPos /= 2;
+      currPos /= 1.5;
     }
     if (currPos > most) {
       most = currPos;
@@ -475,12 +475,12 @@ function mostPos() {
 function mostNeg() {
   var state = null;
   var most = 0;
-  var currNeg = states[key].neg;
-  var currState = states[key].name;
-  if (currState.match(/California|Florida|Texas/g)) {
-    currNeg /= 2;
-  }
   for (var key in states) {
+    var currNeg = states[key].neg;
+    var currState = states[key].name;
+    if (currState.match(/California|Florida|Texas/g)) {
+      currNeg /= 1.5;
+    }
     if (currNeg > most) {
       most = currNeg;
       state = currState;
