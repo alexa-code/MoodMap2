@@ -12,10 +12,10 @@ server.listen(process.env.PORT || 8080);
 app.use(express.static(__dirname + '/public'));
 
 var twit = new twitter({ 
-	consumer_key : 'uckEwH7JW2hmn8HUy832c2lL6',
-	consumer_secret : '0VY37XlTPhaIiLqxW9LEigWlEf1htQw1IZabjnq9opge9T4RAf',
-	access_token_key : '833597569-OSncEQxKCqSEX7zSkQGyEfGLFKowdCMXc7PVDL3R',
-	access_token_secret : '9iXc0mn58yKUS5Q2OBN9yMwtyiHWc7g9YBKTIfWaqh5I6'
+	consumer_key : process.env.consumer_key,
+	consumer_secret : process.env.consumer_secret,
+	access_token_key : process.env.access_token_key,
+	access_token_secret : process.env.access_token_secret
 }),
 s = null;
 
@@ -37,7 +37,7 @@ io.sockets.on('connection', function (socket) {
 						if ((data.text).match(/:\/|stupid|ughh|slut|spider|lame/g)) {
 							polarity = -4;
 						}
-						if ((data.text).match(/sad|hate|sick|tired|no good|stfu|irritat|annoy|leave me alone|hurt|giving up|i hate|damn it|worst|:\(/g)) {
+						if ((data.text).match(/sad|hate|sick|tired|no good|stfu|irritat|annoy|leave me alone|hurt|fuck you|giving up|FUCK|Fuck|Shit|SHIT|i hate|damn it|worst|:\(/g)) {
 							polarity = -5;
 						} 
 						if ((data.text).match(/:\)|love|yay|:D|\(:/g)) {
